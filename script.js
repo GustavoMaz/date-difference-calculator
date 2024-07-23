@@ -1,17 +1,22 @@
 document.getElementById('date-form').addEventListener('submit', (event) => {
   event.preventDefault();
 });
-  document.getElementById('submit').addEventListener('click', displayDateDifference);
+document.getElementById('submit').addEventListener('click', displayDateDifference);
+document.getElementById('today').addEventListener('click', () => {
+  document.getElementById('end-day').value = new Date().getDate();
+  document.getElementById('end-month').value = new Date().getMonth() + 1;
+  document.getElementById('end-year').value = new Date().getFullYear();
+});
 
 function calculateDateDifference() {
-  let startDay = parseInt(document.getElementById('start-day').value);
+  let startDay = document.getElementById('start-day').value;
   let startMonth = document.getElementById('start-month').value;
-  let startYear = parseInt(document.getElementById('start-year').value);
+  let startYear = document.getElementById('start-year').value;
 
-  const endDay = parseInt(document.getElementById('end-day').value);
-  const endMonth = document.getElementById('end-month').value;
-  const endYear = parseInt(document.getElementById('end-year').value);
-  
+  let endDay = document.getElementById('end-day').value;
+  let endMonth = document.getElementById('end-month').value;
+  let endYear = document.getElementById('end-year').value;
+
   const daysInMonths = [
     31,  // Janeiro
     29,  // Fevereiro
@@ -98,8 +103,12 @@ const ymdDisplay = document.createElement('p');
 function displayDateDifference() {
   const ymd = calculateDateDifference();
 
-  ymdDisplay.innerHTML = `${ymd[0]} anos, ${ymd[1]} meses e ${ymd[2]} dias.`
+  ymdDisplay.innerHTML = `${ymd[0]} ano(s), ${ymd[1]} mês(es) e ${ymd[2]} dia(s).`
 
   const resultDisplay = document.getElementById('res');
   resultDisplay.appendChild(ymdDisplay);
+
+  document.getElementById('reset').addEventListener('click', () => {
+    resultDisplay.removeChild(ymdDisplay);
+  })
 }
