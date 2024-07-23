@@ -53,6 +53,11 @@ legend {
   font-weight: bold;
 }
 
+.invalid::after {
+  content: '*';
+  color: var(--primary);
+}
+
 .input-wrapper {
   display: block;
   margin-bottom: var(--xs);
@@ -62,6 +67,12 @@ legend {
   display: flex;
   flex-direction: row;
   align-items: center;
+}
+
+.button-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--m);
 }
 
 button {
@@ -80,15 +91,9 @@ button:hover {
   transform: scale(1.05);
 }
 
-.button-wrapper {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--m);
-  margin-bottom: var(--m);
-}
-
-#res {
+#res p {
   text-align: center;
+  margin-top: var(--m);
 }
 
 #submit {
