@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora de ano físico</title>
+</head>
+
+<body>
+  <header>
+    <h1>Calculadora de ano físico</h1>
+  </header>
+
+  <main>
+    <form id="date-form">
+      <fieldset>
+        <legend>Data de início</legend>
+        <label for="start-day">Dia:</label>
+        <input type="number" name="start-day" id="start-day" placeholder="DD" value="1" min="1">
+
+        <label for="start-month">Mês:</label>
+        <select id="start-month" name="start-month"> 
+          <option value="1">Janeiro</option>
+          <option value="2">Fevereiro</option>
+          <option value="3">Março</option>
+          <option value="4">Abril</option>
+          <option value="5">Maio</option>
+          <option value="6">Junho</option>
+          <option value="7">Julho</option>
+          <option value="8">Agosto</option>
+          <option value="9">Setembro</option>
+          <option value="10">Outubro</option>
+          <option value="11">Novembro</option>
+          <option value="12">Dezembro</option>
+        </select>
+
+        <label for="start-year">Ano:</label>
+        <input type="number" name="start-year" id="start-year" placeholder="AAAA" value="2000" min="0">
+      </fieldset>
+
+
+      <fieldset>
+        <legend>Data de fim</legend>
+        <label for="end-day">Dia:</label>
+        <input type="number" name="end-day" id="end-day" placeholder="DD" value="1" min="1">
+        
+        <label for="end-month">Mês:</label>
+        <select id="end-month" name="end-month"> 
+          <option value="1">Janeiro</option>
+          <option value="2">Fevereiro</option>
+          <option value="3">Março</option>
+          <option value="4">Abril</option>
+          <option value="5">Maio</option>
+          <option value="6">Junho</option>
+          <option value="7">Julho</option>
+          <option value="8">Agosto</option>
+          <option value="9">Setembro</option>
+          <option value="10">Outubro</option>
+          <option value="11">Novembro</option>
+          <option value="12">Dezembro</option>
+        </select>
+
+        <label for="end-year">Ano:</label>
+        <input type="number" name="end-year" id="end-year" placeholder="AAAA" value="2020" min="0">
+      </fieldset>
+
+      <button type="submit" name="submit" id="submit">Calcular diferença</button>
+    </form>
+    <div id="res">
+      <!--label for="unit">Unidade de medida de tempo para o resultado:</label>
+      <select-- name="unit" id="unit">
+        <option value="ymd">Anos, meses e dias</option>
+        <option value="y">Anos</option>
+        <option value="s">Semestres</option>
+        <option value="q">Quadrimestres</option>
+        <option value="t">Trimestres</option>
+        <option value="b">Bimestres</option>
+        <option value="m">Meses</option>
+        <option value="d">Dias</option>
+      </select-->
+    </div>
+    </form>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
