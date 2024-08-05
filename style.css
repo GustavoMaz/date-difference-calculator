@@ -1,14 +1,18 @@
 :root {
   --bg-color: hsl(255, 11%, 7%);
-  --bg-light-color: hsl(255, 11%, 14%);
-  --primary: hsl(128, 57%, 40%);
+  --bg-light-color: hwb(255 13% 84%);
+  --primary: #2ca03b;
+  --accent: #FA3B2D;
   --primary-text: rgb(255, 255, 255);
   --secondary-text: hsl(258, 7%, 73%);
-  --xs: 0.25em;
-  --s: 1em;
-  --m: 2em;
-  --l: 5em;
-  --xl: 7.5em;
+
+  /* Variáveis para os espaçamentos verticais */
+  --m-bottom-xxs: 0.25rem;
+  --m-bottom-xs: 0.5rem;
+  --m-bottom-s: 1rem;
+  --m-bottom-m: 2rem;
+  --m-bottom-l: 4rem;
+  --m-bottom-xl: 7.5rem;
 }
 
 * {
@@ -19,7 +23,7 @@ body {
   background-color: var(--bg-color); 
   color: var(--primary-text);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  margin: var(--m);
+  margin: var(--m-bottom-m);
 }
 
 .container {
@@ -32,25 +36,15 @@ body {
 header {
   text-align: center;
   width: fit-content;
-  margin-bottom: var(--s);
+  margin-bottom: var(--m-bottom-s);
 }
 
 main {
-  border-radius: var(--m) 0;
-  padding: var(--m) var(--s);
+  border-radius: 1rem;
+  padding: 1.5rem;
   box-shadow: 0 0 16px black;
   max-width: 450px;
   background-color: var(--bg-light-color);
-}
-
-fieldset {
-  border: none;
-  width: fit-content;
-  margin-bottom: var(--m);
-}
-
-legend {
-  font-weight: bold;
 }
 
 .invalid::after {
@@ -59,45 +53,61 @@ legend {
 }
 
 .input-wrapper {
-  display: block;
-  margin-bottom: var(--xs);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: var(--m-bottom-m);
 }
 
-#end-date {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
+label { width: 100%; }
+
+input {
+  padding: .5rem;
+  border-radius: 1000px;
+  border: none;
+  outline: none;
+  margin-bottom: var(--m-bottom-xs);
 }
 
 .button-wrapper {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: var(--m);
+  gap: 2rem;
 }
 
 button {
-  padding: var(--s);
+  padding: 1rem;
   border: 4px solid var(--primary);
-  border-radius: var(--xl);
+  border-radius: 4px;
   color: var(--primary-text);
   font-weight: bold;
   box-shadow: 0 4px 4px black;
   height: fit-content;
+  transition: .3s;
+}
+
+button#today {
+  padding: .5rem 1rem;
+  width: fit-content;
+}
+
+button.main-action {
+  border: 4px solid var(--accent);
+  background-color: var(--accent);
 }
 
 button:hover {
   cursor: pointer;
-  transition: .2s;
-  transform: scale(1.05);
+  transform: scale(1.1);
+}
+
+.secondary-action:hover {
+  background-color: var(--primary);
 }
 
 #res p {
   text-align: center;
-  margin-top: var(--m);
-}
-
-#submit {
-  background-color: var(--primary);
+  margin-top: var(--m-bottom-m);
 }
 
 .secondary-action {

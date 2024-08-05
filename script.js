@@ -2,21 +2,74 @@ document.getElementById('date-form').addEventListener('submit', (event) => {
   event.preventDefault();
 });
 
+/*
 const startDayInput = document.getElementById('start-day');
 const startMonthInput = document.getElementById('start-month');
 const startYearInput = document.getElementById('start-year');
 const endDayInput = document.getElementById('end-day');
 const endMonthInput = document.getElementById('end-month');
 const endYearInput = document.getElementById('end-year');
-
-document.getElementById('submit').addEventListener('click', displayDateDifference);
+*/
+/*
 document.getElementById('today').addEventListener('click', () => {
   const today = new Date();
   endDayInput.value = today.getDate();
   endMonthInput.value = today.getMonth() + 1;
   endYearInput.value = today.getFullYear();
 });
+*/
+const startDateInput = document.getElementById('start-date');
+const endDateInput = document.getElementById('end-date');
 
+startDateInput.addEventListener('input', () => {
+  formatInputField(startDateInput)
+});
+
+endDateInput.addEventListener('input', () => {
+  formatInputField(endDateInput)
+});
+
+function formatInputField(inputField) {
+  let str = inputField.value;
+  let lengthToFormatAt = 2;
+  for (i = 0; i <= 2; i++) {
+    if (str.length == lengthToFormatAt) {
+      str += ' / ';
+    } 
+    if (str.length == lengthToFormatAt + 2) {
+      str = str.substring(0, str.length - 3); // Corta os três últimos caractéres
+    }
+    lengthToFormatAt = 7;
+  }
+  inputField.value = str; 
+}
+
+function getInputValues() {
+  const startDay = parseInt(startDateInput.value.substring(0, 1+1))
+  const startMonth = parseInt(startDateInput.value.substring(5, 6+1))
+  const startYear = parseInt(startDateInput.value.substring(10, startDateInput.value.length));
+
+  const endDay = parseInt(endDateInput.value.substring(0, 1+1))
+  const endMonth = parseInt(endDateInput.value.substring(5, 6+1))
+  const endYear = parseInt(endDateInput.value.substring(10, endDateInput.value.length));
+
+
+  console.log('startDay ' + startDay);
+  console.log('startMonth ' + startMonth);
+  console.log('startYear ' + startYear);
+
+  return [
+    startDay, 
+    startMonth, 
+    startYear,
+    endDay, 
+    endMonth, 
+    endYear
+  ];
+}
+
+
+document.getElementById('submit').addEventListener('click', displayDateDifference);
 function clearLabelClasses() {
   document.querySelectorAll('label').forEach(label => label.classList.remove('invalid'));
 }
@@ -35,7 +88,7 @@ function isLeapYear(year) {
 function isDateValid(day, month, year) {
   const daysInMonths = [
     31,  // Janeiro
-    28,  // Fevereiro (non-leap year by default)
+    28,  // Fevereiro
     31,  // Março
     30,  // Abril
     31,  // Maio
@@ -57,6 +110,7 @@ function isDateValid(day, month, year) {
 
 function isInputValid() {
   let isValid = true;
+  /*
   clearLabelClasses();
 
   const startDay = parseInt(startDayInput.value);
@@ -91,17 +145,20 @@ function isInputValid() {
     document.querySelector('label[for="end-day"]').classList.add('invalid');
     isValid = false;
   }
-
+*/
   return isValid;
 }
 
 function calculateDateDifference() {
+  let [startDay, startMonth, startYear, endDay, endMonth, endYear] = getInputValues();
+  /*
   let startDay = parseInt(startDayInput.value);
   let startMonth = parseInt(startMonthInput.value) - 1; // Adjusting month to 0-indexed
   let startYear = parseInt(startYearInput.value);
   let endDay = parseInt(endDayInput.value);
   let endMonth = parseInt(endMonthInput.value) - 1; // Adjusting month to 0-indexed
   let endYear = parseInt(endYearInput.value);
+  */
 
   if (!isInputValid()) {
     window.alert('Por favor, preencha todos os campos de forma válida.');
