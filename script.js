@@ -5,6 +5,19 @@ document.getElementById('date-form').addEventListener('submit', (event) => {
 const startDateInput = document.getElementById('start-date');
 const endDateInput = document.getElementById('end-date');
 
+document.getElementById('today').addEventListener('click', () => {
+  endDateInput.value = getTodaysDate();
+});
+
+function getTodaysDate() {
+  const day = new Date().getDate();
+  const month = new Date().getMonth();
+  const year = new Date().getFullYear();
+  let today = `${day < 10 ? + '0' : ''}${day} / ${month < 10 ? + '0' : ''}${month+1} / ${year}`
+
+  return today;
+}
+
 startDateInput.addEventListener('input', () => {
   formatInputField(startDateInput);
 });
@@ -63,110 +76,66 @@ function isLeapYear(year) {
   return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
 }
 
-function isDateValid(day, month, year) {
-  const daysInMonths = [
-    31,  // Janeiro
-    28,  // Fevereiro
-    31,  // Março
-    30,  // Abril
-    31,  // Maio
-    30,  // Junho
-    31,  // Julho
-    31,  // Agosto
-    30,  // Setembro
-    31,  // Outubro
-    30,  // Novembro
-    31   // Dezembro
-  ];
-
-  if (isLeapYear(year)) {
-    daysInMonths[1] = 29;  // Fevereiro in leap year
-  }
-
-  return day > 0 && day <= daysInMonths[month];
-}
-
+const daysInMonths = [
+  31,  // Janeiro
+  28,  // Fevereiro
+  31,  // Março
+  30,  // Abril
+  31,  // Maio
+  30,  // Junho
+  31,  // Julho
+  31,  // Agosto
+  30,  // Setembro
+  31,  // Outubro
+  30,  // Novembro
+  31   // Dezembro
+]
 function calculateDateDifference() {
   let [startDay, startMonth, startYear, endDay, endMonth, endYear] = getInputValues();
-  
-  const daysInMonths = [
-    31,  // Janeiro
-    isLeapYear(endYear) ? 29 : 28,  // Fevereiro
-    31,  // Março
-    30,  // Abril
-    31,  // Maio
-    30,  // Junho
-    31,  // Julho
-    31,  // Agosto
-    30,  // Setembro
-    31,  // Outubro
-    30,  // Novembro
-    31   // Dezembro
-  ];
 
-  function areDatesValid() {
+  function isDateValid(date, labelFor) {
+    const label = document.querySelector(`label[for="${labelFor}-date"]`);
     let isValid = true;
-    const startDate = startDateInput.value.replaceAll(' / ', '');
-    const endDate = endDateInput.value.replaceAll(' / ', '');
+    date = date.replaceAll(' / ', '');
     const regex = /^[0-9]+$/;
-    console.log(startDate);
-    console.log(endDate);
-    
-    function showWindowAlert(msg) {
+
+    const daysInMonths = [
+      31,  // Janeiro
+      isLeapYear(parseInt(date.substring(3, date.length))) ? 29 : 28,  // Fevereiro
+      31,  // Março
+      30,  // Abril
+      31,  // Maio
+      30,  // Junho
+      31,  // Julho
+      31,  // Agosto
+      30,  // Setembro
+      31,  // Outubro
+      30,  // Novembro
+      31   // Dezembro
+    ]
+    function invalidateDate(msg) {
       if (isValid) {
+        label.classList.add('invalid');
         window.alert(msg);
         isValid = false;
       }
     }
-
     clearLabelClasses();
-  
-    // Data de início
-    if (!regex.test(startDate) && startDate.length != 0) {
-      document.querySelector('label[for="start-date"]').classList.add('invalid');
-      showWindowAlert('Por favor, use somente números.');
+    if (!regex.test(date) && date.length != 0) {
+      invalidateDate('Por favor, use somente números.');
     }
-
-    if (startDate.length == 0) {
-      document.querySelector('label[for="start-date"]').classList.add('invalid');
-      showWindowAlert('Por favor, preencha todos os campos');
-    } else if (startDate.length < 8) {
-      document.querySelector('label[for="start-date"]').classList.add('invalid');
-      showWindowAlert('Por favor, insira uma data existente. Certifique-se de que a formatação está correta.');
+    if (date.length == 0) {
+      invalidateDate('Por favor, preencha todos os campos');
+    } else if (date.length < 8) {
+      invalidateDate('Por favor, insira uma data existente. Certifique-se de que a formatação está correta.');
     }
-  
     if (startDay > daysInMonths[startMonth-1] || startDay < 1 || startMonth < 1 || startMonth > 12) {
-      document.querySelector('label[for="start-date"]').classList.add('invalid');
-      showWindowAlert('Por favor, insira uma data existente.');
+      invalidateDate('Por favor, insira uma data existente.');
     }
-
-    // Data de fim
-    if (!regex.test(endDate) && endDate.length != 0) {
-      document.querySelector('label[for="end-date"]').classList.add('invalid');
-      showWindowAlert('Por favor, use somente números.');
-    }
-    if (endDate.length == 0) {
-      document.querySelector('label[for="end-date"]').classList.add('invalid');
-      showWindowAlert('Por favor, preencha todos os campos');
-    } else if (endDate.length < 8) {
-      document.querySelector('label[for="end-date"]').classList.add('invalid');
-      showWindowAlert('Por favor, insira uma data existente. Certifique-se de que a formatação está correta.');
-    }
-
-    if (endDay > daysInMonths[endMonth-1] || endDay < 1 || endMonth < 1 || endMonth > 12) {
-      document.querySelector('label[for="end-date"]').classList.add('invalid');
-      showWindowAlert('Por favor, insira uma data existente.');
-    }
-
-
-
-
     return isValid;
   }
   
-  if (!areDatesValid()) {
-    return null;
-  } else {
+  if (isDateValid(startDateInput.value, 'start') && isDateValid(endDateInput.value, 'end')) {
     const startDate = new Date(startYear, startMonth, startDay);
     const endDate = new Date(endYear, endMonth, endDay);
     let difference = (endDate - startDate) / (1000 * 60 * 60 * 24);
@@ -195,7 +164,6 @@ function calculateDateDifference() {
 }
 
 const ymdDisplay = document.createElement('p');
-
 function displayDateDifference() {
   const ymd = calculateDateDifference();
   if (ymd == null) return;
